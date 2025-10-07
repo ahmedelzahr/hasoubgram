@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PostController::class)->group(function () {
         Route::get('/posts/create', 'create')->name('create_post');
+        Route::post('/posts/create', 'store')->name('store_post');
     });
 });
 
