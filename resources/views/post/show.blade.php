@@ -28,8 +28,41 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                @foreach ($post->comments as $comment)
+                    <div class="flex  items-center p-4">
 
+                    <img src="{{ $comment->owner->image }}" alt="user_img"
+                        class="rounded-full h-10 w-10 ltr:mr-5 rtl:ml-5">
+
+                    <div class="flex flex-col">
+                        <div>
+                            <a href="" class="text-sm font-bold grow">{{ $post->owner->name }}</a>
+                            <span class="inline">{{ $comment->body }}</span>
+                        </div>
+                        <div class="text-sm mt-1 text-gray-400">{{ $comment->created_at->diffForHumans(null, true, true) }}
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            {{-- comments --}}
+
+            {{-- comment form --}}
+            <div class="w-full border-t p-5">
+                <form action="/posts/{{$post->slug}}/comments/create" method="post" class="w-full">
+                    @csrf
+                    @if($errors->has('body'))
+                    <div class="text-red-500">
+                        {{ $errors->first('body') }}
+                    </div>
+                    @endif
+                    <div class="flex  ">
+                        <textarea class="h-5 grow border-none outline-0 bg-none resize-none focus:ring-0 p-0 overflow-hidden" name="body" rows="2" placeholder='{{__("add a comment ...")}}'></textarea>
+                           
+                            <input type="submit" value='{{ __("submit" ) }}' class="px-4 text-blue-600 cursor-pointer ">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </x-app-layout>

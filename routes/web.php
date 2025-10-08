@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::middleware('auth')->group(function () {
         Route::get('posts/create', 'create')->name('create_post');
         Route::post('posts/create', 'store')->name('store_post');
         Route::get('posts/{post:slug}','show')->name('show_post');
+    });
+    Route::controller((CommentController::class))->group(function(){
+        Route::post('posts/{post:slug}/comments/create','store')->name('store_comment');
     });
 });
 
