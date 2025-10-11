@@ -19,6 +19,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
-        "boxicons": "^2.1.4"
+        "boxicons": "^2.1.4",
+        "sweetalert2": "^11.26.1"
     }
 }

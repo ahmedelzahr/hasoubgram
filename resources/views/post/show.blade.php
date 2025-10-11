@@ -18,6 +18,15 @@
                     <a href={{ route('edit_post', $post->slug) }}>
                         <box-icon name='edit-alt'></box-icon>
                     </a>
+                    <form action="{{ route('delete_post', $post->id) }}" method="POST"
+                        id="delete_form_{{ $post->id }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="confirmDelete({{ $post->id }})">
+                            <box-icon name='trash' class="fill-red-700"></box-icon>
+                        </button>
+                        <p id="tets"></p>
+                    </form>
                 @endif
 
 
@@ -35,7 +44,8 @@
                             <a href="" class="text-sm font-bold grow">{{ $post->owner->name }}</a>
                             <span class="inline">{{ $post->description }}</span>
                         </div>
-                        <div class="text-sm mt-1 text-gray-400">{{ $post->created_at->diffForHumans(null, true, true) }}
+                        <div class="text-sm mt-1 text-gray-400">
+                            {{ $post->created_at->diffForHumans(null, true, true) }}
                         </div>
                     </div>
                 </div>
@@ -78,4 +88,21 @@
             </div>
         </div>
     </div>
+
 </x-app-layout>
+<script>
+function confirmDelete(post) {
+        Swal.fire({
+            title: 'delete_form_' + post,
+            text: 'Do you want to continue',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete_form_' + post).submit();
+            }
+        });
+    }
+</script>
+ 

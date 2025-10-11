@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use SweetAlert2\Laravel\Swal;
 
 class PostController extends Controller
 {
@@ -65,9 +67,10 @@ class PostController extends Controller
     {
         $data = $request->validate(['image' => 'nullable|mimes:png,jpg,gif',
             'description' => 'required']);
-        $request->hasFile('image')?$data['image'] = $request->file('image')->store('posts', 'public'):'';
+        $request->hasFile('image') ? $data['image'] = $request->file('image')->store('posts', 'public') : '';
         $post->update($data);
-        return redirect(route('show_post',$post->slug));
+
+        return redirect(route('show_post', $post->slug));
     }
 
     /**
@@ -75,6 +78,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        Storage::disk('public')->delete($post->image);
+        return redirect(route('welcome'));
     }
 }
