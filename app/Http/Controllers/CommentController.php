@@ -32,7 +32,6 @@ class CommentController extends Controller
     public function store(Post $post,Request $request)
     {
         $data=$request->validate(['body'=>'required']);
-        
         $data['user_id']=Auth::id();
         $post->comments()->create($data);
         return back();

@@ -20,11 +20,13 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PostController::class)->group(function () {
         Route::get('posts/create', 'create')->name('create_post');
+        Route::get('posts/{post:slug}/edit', 'edit')->name('edit_post');
         Route::post('posts/create', 'store')->name('store_post');
-        Route::get('posts/{post:slug}','show')->name('show_post');
+        Route::get('posts/{post:slug}', 'show')->name('show_post');
+        Route::put('posts/{post:slug}', 'update')->name('update_post');
     });
-    Route::controller((CommentController::class))->group(function(){
-        Route::post('posts/{post:slug}/comments/create','store')->name('store_comment');
+    Route::controller((CommentController::class))->group(function () {
+        Route::post('posts/{post:slug}/comments/create', 'store')->name('store_comment');
     });
 });
 

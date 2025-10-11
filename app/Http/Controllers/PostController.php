@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
 class PostController extends Controller
 {
     /**
@@ -29,13 +30,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-       $data=$request->validate(['image'=>'required|mimes:png,jpg,gif',
-                            'description'=>'required']);
-       $data['image']=$request->file('image')->store('posts','public');
-       $data['slug']=Str::random(10);
-       $data['user_id']=Auth::id();
-      
-        Post::create($data);           
+        $data = $request->validate(['image' => 'required|mimes:png,jpg,gif',
+            'description' => 'required']);
+        $data['image'] = $request->file('image')->store('posts', 'public');
+        $data['slug'] = Str::random(10);
+        $data['user_id'] = Auth::id();
+
+        Post::create($data);
+
         return back();
     }
 
@@ -44,8 +46,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-     
-        return view('post.show',compact('post'));
+
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -53,7 +55,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit', compact('post'));
     }
 
     /**
@@ -61,7 +63,11 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate(['image' => 'nullable|mimes:png,jpg,gif',
+            'description' => 'required']);
+        $request->hasFile('image')?$data['image'] = $request->file('image')->store('posts', 'public'):'';
+        $post->update($data);
+        return redirect(route('show_post',$post->slug));
     }
 
     /**
