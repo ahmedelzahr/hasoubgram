@@ -1,5 +1,5 @@
 <div class="flex  items-center mb-4">
-    <x-user.user-avatar :image="$user->image" />
+    <x-user.user-avatar {{ $attributes }} :image="$user->image" />
     <div class="flex flex-col">
         <div>
             <a href="" class="text-sm font-bold grow">{{ $user->userName }}</a>

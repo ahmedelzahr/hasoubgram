@@ -51,7 +51,6 @@
                 </div>
                 @foreach ($post->comments as $comment)
                     <div class="flex  items-center p-4">
-
                         <x-user.user-avatar :image="$comment->owner->image" />
                         <div class="flex flex-col">
                             <div>

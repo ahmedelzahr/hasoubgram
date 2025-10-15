@@ -14,7 +14,7 @@
             <x-user.user-card :user="auth()->user()" />
             <h2 class="text-gray-500 font-bold mb-4">{{ __('Sugessted For You') }}</h2>
             @foreach ($sugesstions as $sugesstion)
-                <x-user.user-card :user="$sugesstion" />
+                <x-user.user-card :user="$sugesstion" class="h-9 w-9" />
             @endforeach
         </div>
 

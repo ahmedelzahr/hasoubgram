@@ -85,4 +85,9 @@ class PostController extends Controller
         Storage::disk('public')->delete($post->image);
         return redirect(route('welcome'));
     }
+
+    public function explore(){
+        $posts=Post::whereRelation('owner','private_account',0)->whereNot('user_id',auth()->id())->simplePaginate(12);
+        return view('post.explore',compact('posts'));
+    }
 }
