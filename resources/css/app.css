@@ -4,7 +4,15 @@
 
 
 .card {
-    @apply flex flex-col rounded-xl bg-white border border-gray-200 my-4
+    @apply flex flex-col rounded-xl bg-white border border-gray-200 mb-4
+}
+
+.card-header {
+    @apply flex items-center
+}
+
+.card-body{
+    @apply flex flex-col
 }
 
 @layer utilities {

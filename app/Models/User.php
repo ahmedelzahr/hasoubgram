@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -65,6 +66,9 @@ class User extends Authenticatable
 
     public function follower(){
         return $this->belongsToMany(User::class,'follows','following_user_id','user_id')->withPivot('confirmed');
+    }
+    public function sugessted_users(){
+        return User::all()->except([Auth::id()])->shuffle()->take(5);
     }
 
 }

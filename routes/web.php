@@ -5,10 +5,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -24,7 +20,8 @@ Route::middleware('auth')->group(function () {
         Route::post('posts/create', 'store')->name('store_post');
         Route::get('posts/{post:slug}', 'show')->name('show_post');
         Route::put('posts/{post:slug}', 'update')->name('update_post');
-         Route::delete('posts/{post}', 'destroy')->name('delete_post');
+        Route::delete('posts/{post}', 'destroy')->name('delete_post');
+        Route::get('/', 'index')->name('home_page');
     });
     Route::controller((CommentController::class))->group(function () {
         Route::post('posts/{post:slug}/comments/create', 'store')->name('store_comment');

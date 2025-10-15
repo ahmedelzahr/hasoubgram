@@ -1,20 +1,19 @@
 <?php
 
-namespace App\View\Components\Post;
+namespace App\View\Components\post;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Form extends Component
+class post extends Component
 {
     /**
      * Create a new component instance.
      */
- 
-    public function __construct(public $url ,public $post=null )
+    public function __construct(public $post)
     {
-     
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class Form extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.post.form');
+        return view('components.post.post');
     }
 }
