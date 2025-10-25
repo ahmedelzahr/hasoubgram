@@ -29,7 +29,7 @@
                         <div class="flex">
                             <button
                                 class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <x-user.user-avatar :image="Auth::user()->image" class="w-6 h-6 mx-0" />
+                                <x-user.user-avatar :image="Auth::user()->image??'Guest'" class="w-6 h-6 mx-0" />
                             </button>
 
                         </div>
@@ -82,8 +82,8 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name??'Guest' }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email??'' }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
