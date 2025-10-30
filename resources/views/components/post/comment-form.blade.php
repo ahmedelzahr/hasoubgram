@@ -7,7 +7,7 @@
                         </div>
                     @endif
                     <div class="flex  ">
-                        <textarea class="h-5 grow border-none outline-0 bg-none resize-none focus:ring-0 p-0 overflow-hidden" name="body"
+                        <textarea class="h-5 grow border-none outline-0 bg-none resize-none focus:ring-0 p-0 overflow-hidden" id="comment-area" name="body"
                             rows="2" placeholder='{{ __('add a comment ...') }}'></textarea>
 
                         <input type="submit" value='{{ __('submit') }}' class="px-4 text-blue-600 cursor-pointer ">

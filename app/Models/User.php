@@ -73,4 +73,22 @@ class User extends Authenticatable
         return User::all()->except([Auth::id()])->shuffle()->take(5);
     }
 
+       public function dataVisible() :bool{
+        $isGuest = !isSet(auth()->user);
+        if ($isGuest){
+            return !$this->private_account;
+        }else{
+            return auth()->id()===$this->id || !auth()->user->private_account || auth()->user->following()->contain($this->id);
+        }
+    }
+
+    public function canFollowed() :bool{
+        $isGuest = !isSet(auth()->user);
+          if ($isGuest){
+            return true;
+        }else{
+            return auth()->id()!=$this->id && !auth()->user->following()->contain($this->id);
+        }
+    }
+
 }

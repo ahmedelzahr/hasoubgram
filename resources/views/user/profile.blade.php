@@ -9,7 +9,8 @@
             <p>{{ $user->name }}</p>
         </div>
         <div class="col-start-1 col-span-2 order-3 md:col-start-3 md:order-4 text-sm">
-            <p>{!! nl2br(e($user->bio))!!}</pr></p>
+            <p>{!! nl2br(e($user->bio)) !!}</pr>
+            </p>
         </div>
 
         <div class="row-start-1 col-start-3 md:order-3 font-bold md:text-xl">
@@ -35,42 +36,44 @@
 
     {{-- buttons --}}
 
-        @if (auth()->id() === $user->id)
-            <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-                <a href="/test " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                    Edit Profile
-                </a>
+    @if (auth()->id() === $user->id)
+        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+            <a href="/test " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                Edit Profile
+            </a>
 
+        </div>
+    @else
+        {{-- @if (isset(auth()->user()->following) && auth()->user()->following->contains($user->id)) --}}
+        @if ($user->canFollowed())
+            <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+                <a href="# " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                    Follow
+                </a>
             </div>
-        @else
-        
-            {{-- @if (isSet(auth()->user()->following) && auth()->user()->following->contains($user->id)) --}}
-            @if ($showFollowingButton)
-                 <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-                    <a href="# " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                        Follow
-                    </a>
-                </div>
-            @endif
-           
-            
         @endif
 
 
+    @endif
 
-    {{-- @if (auth()->id() === $user->id || (isSet(auth()->user()->following) && $user->private_account && auth()->user()->following->contains($user->id) )|| !$user->private_account) --}}
-        @if($canSeeUserData)
-    <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
+
+
+    {{-- @if (auth()->id() === $user->id || (isset(auth()->user()->following) && $user->private_account && auth()->user()->following->contains($user->id)) || !$user->private_account) --}}
+    @if ($user->dataVisible())
+        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
             @foreach ($user->posts as $post)
-            
                 <a href={{ route('show_post', $post->slug) }} class='relative group'>
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="" class="object-cover aspect-square  w-full ">
-                    <div class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
-                        <div class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                    <img src="{{ asset('storage/' . $post->image) }}" alt=""
+                        class="object-cover aspect-square  w-full ">
+                    <div
+                        class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
+                        <div
+                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
                             <box-icon name='heart' type='solid'></box-icon>
                             <p>{{ $post->likes()->count() }}</p>
                         </div>
-                        <div class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                        <div
+                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
                             <box-icon name='comment' type='solid'></box-icon>
                             <p>{{ $post->comments()->count() }}</p>
                         </div>

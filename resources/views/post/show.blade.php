@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="md:flex h-screen" >
+    <div class="md:flex h-screen">
         {{-- left --}}
         <div class="bg-black md:w-7/12  object-cover overflow-clip flex items-center">
             <img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full">
@@ -9,9 +9,9 @@
         <div class="bg-white md:w-5/12 w-full flex flex-col">
             {{-- top --}}
             <div class="flex  items-center border-b-2 p-4">
-               <x-user.user-avatar :image="$post->owner->image" />
+                <x-user.user-avatar :image="$post->owner->image" />
                 <div class="grow">
-                    <a href="" class="text-sm font-bold">{{ $post->owner->name }}</a>
+                    <a href="{{ route('user_profile',$post->owner->userName) }}" class="text-sm font-bold">{{ $post->owner->name }}</a>
                 </div>
 
                 @if (Auth::id() == $post->owner->id)
@@ -64,16 +64,22 @@
                     </div>
                 @endforeach
             </div>
-            {{-- comments --}}
+            <div class="flex space-x-2 p-4 border-t border-t-gray-200">
+                <x-post.like-form :post="$post" />
+                <button  onclick="document.getElementById('comment-area').focus()">
+                    <box-icon name='comment'></box-icon>
+                </button>
+            </div>
+
 
             {{-- comment form --}}
-          <x-post.comment-form :post="$post" />
+            <x-post.comment-form :post="$post"/>
         </div>
     </div>
 
 </x-app-layout>
 <script>
-function confirmDelete(post) {
+    function confirmDelete(post) {
         Swal.fire({
             title: 'delete_form_' + post,
             text: 'Do you want to continue',
@@ -87,4 +93,3 @@ function confirmDelete(post) {
         });
     }
 </script>
- 
