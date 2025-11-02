@@ -11,7 +11,8 @@
             <div class="flex  items-center border-b-2 p-4">
                 <x-user.user-avatar :image="$post->owner->image" />
                 <div class="grow">
-                    <a href="{{ route('user_profile',$post->owner->userName) }}" class="text-sm font-bold">{{ $post->owner->name }}</a>
+                    <a href="{{ route('user_profile', $post->owner->userName) }}"
+                        class="text-sm font-bold">{{ $post->owner->name }}</a>
                 </div>
 
                 @if (Auth::id() == $post->owner->id)
@@ -27,6 +28,30 @@
                         </button>
                         <p id="tets"></p>
                     </form>
+                @elseif (auth()->user()->isFollowing($post->owner))
+                    
+                        <form action="{{ route('unfollow_user', $post->owner->id) }}" method="POST"
+                            class="text-blue-500 text-sm font-bold">
+                            @csrf
+                            <button type="submit" >
+                                {{ __('Unfollow') }}
+                            </button>
+                        </form>
+
+                @elseif (auth()->user()->isPending($post->owner))
+           
+                            <div type="submit" class="text-red-700 text-sm font-bold" >
+                                {{ __('Pending') }}
+                            </div
+                        
+                @else
+                <form action="{{ route('follow_user', $post->owner->id) }}" method="POST"
+                            class="text-blue-500 text-sm font-bold">
+                            @csrf
+                            <button type="submit" >
+                                {{ __('Follow') }}
+                            </button>
+                        </form>
                 @endif
 
 
@@ -66,14 +91,14 @@
             </div>
             <div class="flex space-x-2 p-4 border-t border-t-gray-200">
                 <x-post.like-form :post="$post" />
-                <button  onclick="document.getElementById('comment-area').focus()">
+                <button onclick="document.getElementById('comment-area').focus()">
                     <box-icon name='comment'></box-icon>
                 </button>
             </div>
 
 
             {{-- comment form --}}
-            <x-post.comment-form :post="$post"/>
+            <x-post.comment-form :post="$post" />
         </div>
     </div>
 

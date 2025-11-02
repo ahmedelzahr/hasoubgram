@@ -11,14 +11,33 @@
 
         {{-- right side --}}
         <div class="hidden md:w-5/12 md:flex md:flex-col md:items-start">
-            <x-user.user-card :user="auth()->user()" />
+               @session('status')
+       
+            <div class="bg-green-100 rounded-md p-2 absolute right-10 text-sm text-green-700" alert>{{ session('status') }}</div>
+       
+    @endsession
+            <div class="flex">
+                <x-user.user-card :user="auth()->user()" />
+
+
+            </div>
+
             <h2 class="text-gray-500 font-bold mb-4">{{ __('Sugessted For You') }}</h2>
             @foreach ($sugesstions as $sugesstion)
-                <x-user.user-card :user="$sugesstion" class="h-9 w-9" />
+                <div class="flex w-full justify-between items-center">
+                    <div>
+                        <x-user.user-card :user="$sugesstion" class="h-9 w-9 " />
+                    </div>
+
+                    <form action="{{ route('follow_user', $sugesstion->id) }}" method="post">
+                        @csrf
+                        <button class="text-blue-500 text-md font-bold" type="submit">Follow</button>
+                    </form>
+                </div>
             @endforeach
         </div>
 
 
     </div>
-
+ 
 </x-app-layout>

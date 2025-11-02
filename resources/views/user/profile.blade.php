@@ -22,12 +22,12 @@
                 <div>{{ $user->posts->count() > 1 ? __('posts') : __('post') }}</div>
             </div>
             <div class="flex flex-col md:flex-row md:space-x-1 ">
-                <div class="font-bold">{{ $user->posts->count() }}</div>
-                <div>{{ $user->posts->count() > 1 ? __('posts') : __('post') }}</div>
+                <div class="font-bold">{{ $user->follower()->count() }}</div>
+                <div>{{ $user->follower()->count() > 1 ? __('followers') : __('follower') }}</div>
             </div>
             <div class="flex flex-col md:flex-row md:space-x-1 ">
-                <div class="font-bold">{{ $user->posts->count() }}</div>
-                <div>{{ $user->posts->count() > 1 ? __('posts') : __('post') }}</div>
+                <div class="font-bold">{{ $user->following()->count() }}</div>
+                <div>{{ $user->following()->count() > 1 ? __('followings') : __('following') }}</div>
             </div>
 
         </div>
@@ -43,17 +43,34 @@
             </a>
 
         </div>
-    @else
-        {{-- @if (isset(auth()->user()->following) && auth()->user()->following->contains($user->id)) --}}
-        @if ($user->canFollowed())
-            <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-                <a href="# " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                    Follow
-                </a>
+    @elseif (auth()->user()->isFollowing($user))
+        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+            <form action="{{ route('unfollow_user', $user->id) }}" method="POST"
+                class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                @csrf
+                <button type="submit" class="w-full">
+                    {{ __('Unfollow') }}
+                </button>
+            </form>
+
+        </div>
+    @elseif (auth()->user()->isPending($user))
+        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+            <div type="submit" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                {{ __('Pending') }}
             </div>
-        @endif
+        </div>
+    @else
+        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+            <form action="{{ route('follow_user', $user->id) }}" method="POST"
+                class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                @csrf
+                <button type="submit" class="w-full">
+                    {{ __('Follow') }}
+                </button>
+            </form>
 
-
+        </div>
     @endif
 
 
