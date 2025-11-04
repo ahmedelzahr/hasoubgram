@@ -20,39 +20,51 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-2 sm:justify-center sm:items-center space-x-4">
+                @guest
+                    <a class=" bg-black text-white font-bold px-2 py-1 rounded-md" href="/login">{{ __('Login') }}</a>
+                    <a href="/register">{{ __('Register') }}</a>
+                @endguest
                 @auth
-                <a href="{{ route('home_page') }}" class="pt-1"><box-icon type='{{url()->current()==route('home_page')?'solid': '' }}' name='home'></box-icon></a>
-                  <a href="{{ route('explore_page') }}" class="pt-1"><box-icon type='{{url()->current()==route('explore_page')?'solid': '' }}' name='compass'></box-icon></a>    
-                @endauth
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <div class="flex">
-                            <button
-                                class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <x-user.user-avatar :image="auth()->user()->image" class="w-6 h-6 mx-0" />
-                            </button>
+                    <a href="{{ route('home_page') }}" class="pt-1"><box-icon
+                            type='{{ url()->current() == route('home_page') ? 'solid' : '' }}'
+                            name='home'></box-icon></a>
+                    <a href="{{ route('explore_page') }}" class="pt-1"><box-icon
+                            type='{{ url()->current() == route('explore_page') ? 'solid' : '' }}'
+                            name='compass'></box-icon></a>
+                    <a href="{{ route('create_post') }}" class="pt-1"><box-icon
+                            type='{{ url()->current() == route('create_post') ? 'solid' : '' }}'
+                            name='message-square-add'></box-icon></a>
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <div class="flex">
+                                <button
+                                    class="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <x-user.user-avatar :image="auth()->user()->image" class="w-6 h-6 mx-0" />
+                                </button>
 
-                        </div>
+                            </div>
 
-                    </x-slot>
+                        </x-slot>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
                             </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                @endauth
+
             </div>
 
             <!-- Hamburger -->
@@ -80,28 +92,40 @@
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name??'Guest' }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email??'' }}</div>
-            </div>
+        @auth
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('profile.edit')">
+                        {{ __('Security') }}
                     </x-responsive-nav-link>
-                </form>
+                    <x-responsive-nav-link :href="route('user_profile',auth()->user()->userName)">
+                        {{ __('Profile') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('create_post')">
+                        {{ __('New Post') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('explore_page')">
+                        {{ __('Explore') }}
+                    </x-responsive-nav-link>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endauth
+
     </div>
 </nav>

@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::controller(UserController::class)->group(function(){
-    Route::get('/profile/{user:userName}','show')->name('user_profile');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/profile/{user:userName}', 'show')->name('user_profile');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/posts/{post:slug}/like',LikeController::class)->name('like_post');
-    Route::post('/{user}/follow',[FollowController::class, 'follow'])->name('follow_user');
-    Route::post('/{user}/unfollow',[FollowController::class, 'unfollow'])->name('unfollow_user');
+    Route::post('/posts/{post:slug}/like', LikeController::class)->name('like_post');
+    Route::post('/{user}/follow', [FollowController::class, 'follow'])->name('follow_user');
+    Route::post('/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow_user');
     Route::controller(PostController::class)->group(function () {
         Route::get('posts/create', 'create')->name('create_post');
         Route::get('posts/{post:slug}/edit', 'edit')->name('edit_post');

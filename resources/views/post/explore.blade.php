@@ -3,7 +3,7 @@
         @foreach ($posts as $post)
             <div>
                 <a href="{{ route('show_post', $post->slug) }}" >
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="" class=" object-cover w-full h-64 rounded">
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="" class=" object-cover w-full aspect-square rounded">
                 </a>
             </div>
         @endforeach

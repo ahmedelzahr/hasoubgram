@@ -33,12 +33,23 @@
         </div>
 
     </div>
+@guest
+      <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+            <form action="{{ route('follow_user', $user->id) }}" method="POST"
+                class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                @csrf
+                <button type="submit" class="w-full">
+                    {{ __('Follow') }}
+                </button>
+            </form>
 
+        </div>
+@endguest
     {{-- buttons --}}
-
+@auth
     @if (auth()->id() === $user->id)
         <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-            <a href="/test " class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+            <a href="{{ route('profile.edit') }}" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
                 Edit Profile
             </a>
 
@@ -72,6 +83,8 @@
 
         </div>
     @endif
+@endauth
+    
 
 
 

@@ -15,7 +15,8 @@
                         class="text-sm font-bold">{{ $post->owner->name }}</a>
                 </div>
 
-                @if (Auth::id() == $post->owner->id)
+
+                @can('update', $post)
                     <a href={{ route('edit_post', $post->slug) }}>
                         <box-icon name='edit-alt'></box-icon>
                     </a>
@@ -28,31 +29,31 @@
                         </button>
                         <p id="tets"></p>
                     </form>
-                @elseif (auth()->user()->isFollowing($post->owner))
-                    
+                @endcan
+                @cannot('update', $post)
+                    @if (auth()->user()->isFollowing($post->owner))
                         <form action="{{ route('unfollow_user', $post->owner->id) }}" method="POST"
-                            class="text-blue-500 text-sm font-bold">
+                            class="text-red-500 text-sm font-bold">
                             @csrf
-                            <button type="submit" >
+                            <button type="submit">
                                 {{ __('Unfollow') }}
                             </button>
                         </form>
-
-                @elseif (auth()->user()->isPending($post->owner))
-           
-                            <div type="submit" class="text-red-700 text-sm font-bold" >
-                                {{ __('Pending') }}
-                            </div
-                        
-                @else
-                <form action="{{ route('follow_user', $post->owner->id) }}" method="POST"
+                    @elseif (auth()->user()->isPending($post->owner))
+                        <div type="submit" class="text-red-700 text-sm font-bold">
+                            {{ __('Pending') }}
+                        </div>
+                    @else
+                        <form action="{{ route('follow_user', $post->owner->id) }}" method="POST"
                             class="text-blue-500 text-sm font-bold">
                             @csrf
-                            <button type="submit" >
+                            <button type="submit">
                                 {{ __('Follow') }}
                             </button>
                         </form>
-                @endif
+                    @endif
+                @endcannot
+
 
 
 
