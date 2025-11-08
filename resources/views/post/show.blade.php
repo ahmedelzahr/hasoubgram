@@ -91,11 +91,12 @@
                 @endforeach
             </div>
             <div class="flex space-x-2 p-4 border-t border-t-gray-200">
-                <x-post.like-form :post="$post" />
+                <livewire:like :post="$post" />
                 <button onclick="document.getElementById('comment-area').focus()">
                     <box-icon name='comment'></box-icon>
                 </button>
             </div>
+             <livewire:likedby :post="$post" />
 
 
             {{-- comment form --}}

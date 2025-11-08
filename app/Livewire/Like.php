@@ -13,7 +13,8 @@ class Like extends Component
  public function toggleLike()
     {
         $this->post->likes()->toggle(auth()->user());
-      
+
+      $this->dispatch('toggledlike');
 
     }
     public function render()
