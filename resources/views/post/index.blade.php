@@ -11,11 +11,10 @@
 
         {{-- right side --}}
         <div class="hidden md:w-5/12 md:flex md:flex-col md:items-start">
-               @session('status')
-       
-            <div class="bg-green-100 rounded-md p-2 absolute right-10 text-sm text-green-700" alert>{{ session('status') }}</div>
-       
-    @endsession
+            @session('status')
+                <div class="bg-green-100 rounded-md p-2 absolute right-10 text-sm text-green-700" alert>
+                    {{ session('status') }}</div>
+            @endsession
             <div class="flex">
                 <x-user.user-card :user="auth()->user()" />
 
@@ -35,9 +34,10 @@
                     </form>
                 </div>
             @endforeach
+        
         </div>
 
 
     </div>
- 
+
 </x-app-layout>

@@ -14,11 +14,10 @@
                 {{ $post->description }}
             </div>
             <div class="flex space-x-2">
-              <x-post.like-form :post="$post"/>
+              <livewire:like :post="$post"/>
                 <a href="{{ route('show_post' , $post->slug) }}">
                     <box-icon name='comment'></box-icon>
                 </a>
-
             </div>
             @if ($post->comments->count() > 0)
                 <a class="font-blod text-sm text-gray-500" href="{{ route('show_post', $post->slug) }}">View all
