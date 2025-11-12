@@ -17,8 +17,6 @@
             @endsession
             <div class="flex">
                 <x-user.user-card :user="auth()->user()" />
-
-
             </div>
 
             <h2 class="text-gray-500 font-bold mb-4">{{ __('Sugessted For You') }}</h2>
@@ -28,10 +26,7 @@
                         <x-user.user-card :user="$sugesstion" class="h-9 w-9 " />
                     </div>
 
-                    <form action="{{ route('follow_user', $sugesstion->id) }}" method="post">
-                        @csrf
-                        <button class="text-blue-500 text-md font-bold" type="submit">Follow</button>
-                    </form>
+                 <livewire:follow :targetedUser='$sugesstion' :showButton='false'/>
                 </div>
             @endforeach
         

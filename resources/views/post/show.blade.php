@@ -31,32 +31,8 @@
                     </form>
                 @endcan
                 @cannot('update', $post)
-                    @if (auth()->user()->isFollowing($post->owner))
-                        <form action="{{ route('unfollow_user', $post->owner->id) }}" method="POST"
-                            class="text-red-500 text-sm font-bold">
-                            @csrf
-                            <button type="submit">
-                                {{ __('Unfollow') }}
-                            </button>
-                        </form>
-                    @elseif (auth()->user()->isPending($post->owner))
-                        <div type="submit" class="text-red-700 text-sm font-bold">
-                            {{ __('Pending') }}
-                        </div>
-                    @else
-                        <form action="{{ route('follow_user', $post->owner->id) }}" method="POST"
-                            class="text-blue-500 text-sm font-bold">
-                            @csrf
-                            <button type="submit">
-                                {{ __('Follow') }}
-                            </button>
-                        </form>
-                    @endif
+                   <livewire:follow :targetedUser='$post->owner' :showButton='false'/>
                 @endcannot
-
-
-
-
             </div>
             {{-- middle --}}
             <div class="grow">

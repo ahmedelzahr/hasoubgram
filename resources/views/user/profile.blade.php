@@ -33,8 +33,8 @@
         </div>
 
     </div>
-@guest
-      <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+    @guest
+        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
             <form action="{{ route('follow_user', $user->id) }}" method="POST"
                 class="col-span-4 md:col-start-2 primary-button md:col-span-2">
                 @csrf
@@ -44,78 +44,53 @@
             </form>
 
         </div>
-@endguest
+    @endguest
     {{-- buttons --}}
-@auth
-    @if (auth()->id() === $user->id)
-        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-            <a href="{{ route('profile.edit') }}" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                Edit Profile
-            </a>
-
-        </div>
-    @elseif (auth()->user()->isFollowing($user))
-        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-            <form action="{{ route('unfollow_user', $user->id) }}" method="POST"
-                class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                @csrf
-                <button type="submit" class="w-full">
-                    {{ __('Unfollow') }}
-                </button>
-            </form>
-
-        </div>
-    @elseif (auth()->user()->isPending($user))
-        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-            <div type="submit" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                {{ __('Pending') }}
-            </div>
-        </div>
-    @else
-        <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
-            <form action="{{ route('follow_user', $user->id) }}" method="POST"
-                class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                @csrf
-                <button type="submit" class="w-full">
-                    {{ __('Follow') }}
-                </button>
-            </form>
-
-        </div>
-    @endif
-@endauth
-    
-
-
-
-    {{-- @if (auth()->id() === $user->id || (isset(auth()->user()->following) && $user->private_account && auth()->user()->following->contains($user->id)) || !$user->private_account) --}}
-    @if ($user->dataVisible())
-        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
-            @foreach ($user->posts as $post)
-                <a href={{ route('show_post', $post->slug) }} class='relative group'>
-                    <img src="{{ asset('storage/' . $post->image) }}" alt=""
-                        class="object-cover aspect-square  w-full ">
-                    <div
-                        class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
-                        <div
-                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
-                            <box-icon name='heart' type='solid'></box-icon>
-                            <p>{{ $post->likes()->count() }}</p>
-                        </div>
-                        <div
-                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
-                            <box-icon name='comment' type='solid'></box-icon>
-                            <p>{{ $post->comments()->count() }}</p>
-                        </div>
-                    </div>
+    @auth
+        @if (auth()->id() === $user->id)
+            <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
+                <a href="{{ route('profile.edit') }}" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
+                    Edit Profile
                 </a>
-            @endforeach
-        </div>
-    @else
-        <div class='flex justify-center items-center text-center mt-4'></div>
-        <p class="text-center">This is private account Please follow to start seing his posts</p>
 
-    @endif
+            </div>
+            @else
+              <livewire:follow :targetedUser='$user' :showButton='true'/>
+            @endif
+          
+        @endauth
+
+
+
+
+        {{-- @if (auth()->id() === $user->id || (isset(auth()->user()->following) && $user->private_account && auth()->user()->following->contains($user->id)) || !$user->private_account) --}}
+        @if ($user->dataVisible())
+            <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
+                @foreach ($user->posts as $post)
+                    <a href={{ route('show_post', $post->slug) }} class='relative group'>
+                        <img src="{{ asset('storage/' . $post->image) }}" alt=""
+                            class="object-cover aspect-square  w-full ">
+                        <div
+                            class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
+                            <div
+                                class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                                <box-icon name='heart' type='solid'></box-icon>
+                                <p>{{ $post->likes()->count() }}</p>
+                            </div>
+                            <div
+                                class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                                <box-icon name='comment' type='solid'></box-icon>
+                                <p>{{ $post->comments()->count() }}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @else
+            <div class='flex justify-center items-center text-center mt-4'></div>
+            <p class="text-center">This is private account Please follow to start seing his posts</p>
+
+        @endif
 
 
 
