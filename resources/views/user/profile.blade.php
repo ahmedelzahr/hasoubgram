@@ -21,14 +21,8 @@
                 <div class="font-bold">{{ $user->posts->count() }}</div>
                 <div>{{ $user->posts->count() > 1 ? __('posts') : __('post') }}</div>
             </div>
-            <div class="flex flex-col md:flex-row md:space-x-1 ">
-                <div class="font-bold">{{ $user->follower()->count() }}</div>
-                <div>{{ $user->follower()->count() > 1 ? __('followers') : __('follower') }}</div>
-            </div>
-            <div class="flex flex-col md:flex-row md:space-x-1 ">
-                <div class="font-bold">{{ $user->following()->count() }}</div>
-                <div>{{ $user->following()->count() > 1 ? __('followings') : __('following') }}</div>
-            </div>
+            <livewire:follower :user_id='$user->id' />
+            <livewire:following :user_id='$user->id' />
 
         </div>
 
@@ -54,43 +48,43 @@
                 </a>
 
             </div>
-            @else
-              <livewire:follow :targetedUser='$user' :showButton='true'/>
-            @endif
-          
-        @endauth
-
-
-
-
-        {{-- @if (auth()->id() === $user->id || (isset(auth()->user()->following) && $user->private_account && auth()->user()->following->contains($user->id)) || !$user->private_account) --}}
-        @if ($user->dataVisible())
-            <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
-                @foreach ($user->posts as $post)
-                    <a href={{ route('show_post', $post->slug) }} class='relative group'>
-                        <img src="{{ asset('storage/' . $post->image) }}" alt=""
-                            class="object-cover aspect-square  w-full ">
-                        <div
-                            class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
-                            <div
-                                class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
-                                <box-icon name='heart' type='solid'></box-icon>
-                                <p>{{ $post->likes()->count() }}</p>
-                            </div>
-                            <div
-                                class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
-                                <box-icon name='comment' type='solid'></box-icon>
-                                <p>{{ $post->comments()->count() }}</p>
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
         @else
-            <div class='flex justify-center items-center text-center mt-4'></div>
-            <p class="text-center">This is private account Please follow to start seing his posts</p>
-
+            <livewire:follow :targetedUser='$user' :showButton='true' />
         @endif
+
+    @endauth
+
+
+
+
+
+    @if ($user->dataVisible())
+        <div class="grid grid-cols-3 gap-1 md:grid-cols-4 mt-4">
+            @foreach ($user->posts as $post)
+                <a href={{ route('show_post', $post->slug) }} class='relative group'>
+                    <img src="{{ asset('storage/' . $post->image) }}" alt=""
+                        class="object-cover aspect-square  w-full ">
+                    <div
+                        class="flex justify-center items-center absolute top-0 w-full h-full space-x-2 group-hover:bg-black/40">
+                        <div
+                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                            <box-icon name='heart' type='solid'></box-icon>
+                            <p>{{ $post->likes()->count() }}</p>
+                        </div>
+                        <div
+                            class="invisible flex text-white text-xl font-bold fill-white justify-center items-center group-hover:visible space-x-1">
+                            <box-icon name='comment' type='solid'></box-icon>
+                            <p>{{ $post->comments()->count() }}</p>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    @else
+        <div class='flex justify-center items-center text-center mt-4'></div>
+        <p class="text-center">This is private account Please follow to start seing his posts</p>
+
+    @endif
 
 
 

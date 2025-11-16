@@ -27,6 +27,7 @@ class Follow extends Component
         }
 
         $this->updateFollowingStatus();
+        $this->dispatch('followEvent');
 
     }
 
