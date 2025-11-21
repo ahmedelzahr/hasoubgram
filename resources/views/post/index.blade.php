@@ -2,12 +2,7 @@
 
     <div class="flex md:flex-row flex-col w-full gap-20">
         {{-- left side --}}
-        <div class="md:w-7/12 w-full">
-            @forelse ($posts as $post)
-                <x-post :post="$post" />
-            @empty
-            @endforelse
-        </div>
+      <livewire:post-list/>
 
         {{-- right side --}}
         <div class="hidden md:w-5/12 md:flex md:flex-col md:items-start">

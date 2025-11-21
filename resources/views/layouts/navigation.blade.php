@@ -34,6 +34,18 @@
                     <a href="{{ route('create_post') }}" class="pt-1"><box-icon
                             type='{{ url()->current() == route('create_post') ? 'solid' : '' }}'
                             name='message-square-add'></box-icon></a>
+
+                    <x-dropdown width="96">
+                        <x-slot name="trigger">
+                            <button class="relative"> <box-icon name='user'></box-icon>
+                                <livewire:request-count :userId="auth()->id()" />
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+
+                            <livewire:requests-list :userId="auth()->id()" />
+                        </x-slot>
+                    </x-dropdown>
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <div class="flex">
@@ -103,7 +115,7 @@
                     <x-responsive-nav-link :href="route('profile.edit')">
                         {{ __('Security') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('user_profile',auth()->user()->userName)">
+                    <x-responsive-nav-link :href="route('user_profile', auth()->user()->userName)">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('create_post')">

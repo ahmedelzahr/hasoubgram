@@ -138,4 +138,20 @@ class User extends Authenticatable
     {
         return $this->following()->where('users.id', $user->id)->wherePivot('confirmed', 0)->exists();
     }
+
+    public function pendingRequest(){
+      
+        return $this->follower()->wherePivot('confirmed',false)->get();
+    }
+     public function pendingCount(){
+        
+        return $this->follower()->wherePivot('confirmed',false)->count();
+    }
+
+    public function confirmFollower($requestedUserId){
+        return $this->follower()->updateExistingPivot($requestedUserId,['confirmed'=> true]);
+
+    }
+
+   
 }
