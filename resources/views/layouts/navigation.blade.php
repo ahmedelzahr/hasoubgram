@@ -25,16 +25,26 @@
                     <a href="/register">{{ __('Register') }}</a>
                 @endguest
                 @auth
-                    <a href="{{ route('home_page') }}" class="pt-1"><box-icon
+                    <a href="{{ route('home_page') }}" ><box-icon
                             type='{{ url()->current() == route('home_page') ? 'solid' : '' }}'
                             name='home'></box-icon></a>
-                    <a href="{{ route('explore_page') }}" class="pt-1"><box-icon
+                    <a href="{{ route('explore_page') }}" ><box-icon
                             type='{{ url()->current() == route('explore_page') ? 'solid' : '' }}'
                             name='compass'></box-icon></a>
-                    <a href="{{ route('create_post') }}" class="pt-1"><box-icon
+                    <a href="{{ route('create_post') }}" ><box-icon
                             type='{{ url()->current() == route('create_post') ? 'solid' : '' }}'
                             name='message-square-add'></box-icon></a>
+                    <x-dropdown width="96">
+                        <x-slot name="trigger">
+                            <button class="relative"> <box-icon name='bell'></box-icon>
+                                <livewire:notification-count />
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
 
+                            <livewire:notification-list />
+                        </x-slot>
+                    </x-dropdown>
                     <x-dropdown width="96">
                         <x-slot name="trigger">
                             <button class="relative"> <box-icon name='user'></box-icon>
@@ -42,7 +52,6 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-
                             <livewire:requests-list :userId="auth()->id()" />
                         </x-slot>
                     </x-dropdown>

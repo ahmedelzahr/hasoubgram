@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
-
+use App\Notifications\CommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth ;
 
@@ -34,6 +34,7 @@ class CommentController extends Controller
         $data=$request->validate(['body'=>'required']);
         $data['user_id']=Auth::id();
         $post->comments()->create($data);
+        $post->owner->notify(new CommentNotification(auth()->user(),$post));
         return back();
     }
 
