@@ -31,9 +31,9 @@
                     <a href="{{ route('explore_page') }}" ><box-icon
                             type='{{ url()->current() == route('explore_page') ? 'solid' : '' }}'
                             name='compass'></box-icon></a>
-                    <a href="{{ route('create_post') }}" ><box-icon
+                    <button onclick="Livewire.dispatch('openModal',{component:'post-create-modal'})" ><box-icon
                             type='{{ url()->current() == route('create_post') ? 'solid' : '' }}'
-                            name='message-square-add'></box-icon></a>
+                            name='message-square-add'></box-icon></button>
                     <x-dropdown width="96">
                         <x-slot name="trigger">
                             <button class="relative"> <box-icon name='bell'></box-icon>

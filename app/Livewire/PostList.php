@@ -8,7 +8,7 @@ use App\Models\Post;
 class PostList extends Component
 
 {
-    protected $listeners = ['confirmUser'=>'loadPosts' ,'removeFollower'=>'loadPosts','followEvent'=>'loadPosts' ];
+    protected $listeners = ['confirmUser'=>'loadPosts' ,'removeFollower'=>'loadPosts','followEvent'=>'loadPosts','addPost'=>'loadPosts' ];
     public $posts = [];
 
     public function mount()

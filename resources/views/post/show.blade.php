@@ -1,9 +1,8 @@
 <x-app-layout>
     <div class="md:flex h-screen">
         {{-- left --}}
-        <div class="bg-black md:w-7/12  object-cover overflow-clip flex items-center">
-            <img src="{{ asset('storage/' . $post->image) }}" alt="" class="w-full">
-        </div>
+        <livewire:post_image :image="$post->image">
+         
         {{-- right --}}
 
         <div class="bg-white md:w-5/12 w-full flex flex-col">
@@ -17,9 +16,9 @@
 
 
                 @can('update', $post)
-                    <a href={{ route('edit_post', $post->slug) }}>
+                    <button onclick="Livewire.dispatch('openModal', { component: 'edit-image-modal', arguments: { postId: {{ $post->id }} }})" >
                         <box-icon name='edit-alt'></box-icon>
-                    </a>
+                    </button>
                     <form action="{{ route('delete_post', $post->id) }}" method="POST"
                         id="delete_form_{{ $post->id }}">
                         @csrf
