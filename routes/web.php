@@ -6,7 +6,10 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -14,6 +17,12 @@ Route::get('/dashboard', function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/profile/{user:userName}', 'show')->name('user_profile');
 });
+route::get('changeLang/{local}',function($local){
+  Session::put('lang',$local);
+    App::setLocale($local);
+return redirect()->back();
+})->name('switch_lang');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

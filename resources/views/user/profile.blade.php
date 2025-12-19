@@ -44,7 +44,7 @@
         @if (auth()->id() === $user->id)
             <div class="grid grid-cols-4 mt-4 space-x-2 px-4">
                 <a href="{{ route('profile.edit') }}" class="col-span-4 md:col-start-2 primary-button md:col-span-2">
-                    Edit Profile
+                    {{ __('Edit Profile') }}
                 </a>
 
             </div>

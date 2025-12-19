@@ -1,6 +1,6 @@
 <div class="flex flex-col h-[50rem] ">
     <div class="flex justify-center items-center w-full border-b border-b-neutral-200 p-2">
-        <h1 class="flex-grow flex justify-center items-center">Creat New Post</h1>
+        <h1 class="flex-grow flex justify-center items-center">{{ __("Creat New Post") }}</h1>
         @if ($image)
             <button class="text-sm text-blue-500 font-bold" wire:click="save()">{{ __('Next') }}</button>
         @endif

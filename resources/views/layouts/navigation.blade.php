@@ -17,7 +17,7 @@
                     </x-nav-link>
                 </div>
             </div>
-
+            <livewire:search></livewire:search>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-2 sm:justify-center sm:items-center space-x-4">
                 @guest
@@ -25,13 +25,13 @@
                     <a href="/register">{{ __('Register') }}</a>
                 @endguest
                 @auth
-                    <a href="{{ route('home_page') }}" ><box-icon
+                    <a href="{{ route('home_page') }}"><box-icon
                             type='{{ url()->current() == route('home_page') ? 'solid' : '' }}'
                             name='home'></box-icon></a>
-                    <a href="{{ route('explore_page') }}" ><box-icon
+                    <a href="{{ route('explore_page') }}"><box-icon
                             type='{{ url()->current() == route('explore_page') ? 'solid' : '' }}'
                             name='compass'></box-icon></a>
-                    <button onclick="Livewire.dispatch('openModal',{component:'post-create-modal'})" ><box-icon
+                    <button onclick="Livewire.dispatch('openModal',{component:'post-create-modal'})"><box-icon
                             type='{{ url()->current() == route('create_post') ? 'solid' : '' }}'
                             name='message-square-add'></box-icon></button>
                     <x-dropdown width="96">

@@ -37,7 +37,7 @@
 
         </div>
 <x-primary-button class="justify-center" wire:click="save">
-    Publish
+    {{ __("Publish") }}
 </x-primary-button>
     </div>
 </div>

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'image',
         'bio',
         'private_account',
+        'lang'
     ];
 
     /**
@@ -150,6 +151,11 @@ class User extends Authenticatable
 
     public function confirmFollower($requestedUserId){
         return $this->follower()->updateExistingPivot($requestedUserId,['confirmed'=> true]);
+
+    }
+
+    public function search($keyWord){
+        return User::where('userName','LIKE',"%{$keyWord}%")->get();
 
     }
 

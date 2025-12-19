@@ -31,24 +31,26 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-             'username' => ['required', 'string', 'max:30'],
+            'username' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+             'lang'=>'required'
         ]);
 
         $user = User::create([
             'name' => $request->name,
-            'username'=>$request->username,
+            'username' => $request->username,
             'email' => $request->email,
+            'lang'=>$request->lang,
             'password' => Hash::make($request->password),
             // https://ui-avatars.com/api/?name=Elon+Musk
-            'image'=>'https://ui-avatars.com/api/?name='. urlencode($request->name)
+            'image' => 'https://ui-avatars.com/api/?name='.urlencode($request->name),
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('welcome', absolute: false));
+        return redirect(route('home_page', absolute: false));
     }
 }
